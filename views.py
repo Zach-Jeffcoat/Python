@@ -1,27 +1,20 @@
 from django.shortcuts import render, redirect
-from time import gmtime, strftime
-
 
 # Create your views here.
+def homepage(request):
+    return render (request, 'homepage.html')
 
-from django.shortcuts import render, HttpResponse
-def index(request):
-    context={
-        "time": strftime("%Y-%m-%d %H:%M %p", gmtime())
-    }
-    return render(request, "index.html", context);
+def result(request):
+    request.session['name'] = request.POST['name']
+    request.session['dojo'] = request.POST['dojo']
+    request.session['lang'] = request.POST['lang']
+    request.session['comment'] = request.POST ['comment']
+    return redirect('/result/data')
 
-def new(request):
-    return HttpResponse("placeholder to display a new form to creaate a blog!");
+def data(request):
+    return render(request, 'result.html')
+    #request.session['name'] = request.POST['name']
+    #request.session['dojo'] = request.POST['dojo']
+    #request.session['lang'] = request.POST['lang']
+    #request.session['comment'] = request.POST ['comment']
 
-def create(request):
-    return(redirect('/'))
-
-def show(request, number):
-    return HttpResponse(f"placeholder to display blog number {number}")
-
-def edit(request, number):
-    return HttpResponse(f"placeholder to edit blog {number}")
-
-def delete(request, number):
-    return(redirect('/'))
